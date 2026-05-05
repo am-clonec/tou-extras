@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <DebugType>embedded</DebugType>
+
+        <VersionPrefix>1.0.0</VersionPrefix>
+        <VersionSuffix></VersionSuffix>
+        <RootNamespace>TouExtras</RootNamespace>
+        <Description>My self-made beautiful mod. Kinda just adds impostor versions of several roles.</Description>
+        <NoWarn>1591;1707</NoWarn>
+        <!-- <Authors>your name</Authors> -->
+    </PropertyGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Resources\**\*.*"/>
+    </ItemGroup>
+
+    <Import Project="../AmongUs.props"/>
+
+    <Target Name="Copy" AfterTargets="Build" Condition="'$(AmongUs)' != ''">
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(AmongUs)/BepInEx/plugins/" UseSymboliclinksIfPossible="true" />
+    </Target>
+</Project>

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+    <!-- Player Colors -->
+    <string name="PlayerColorSpiderman">Spiderman</string>
+    <string name="PlayerColorSunburn">Sunburn</string>
+    <!-- Cause of Deaths -->
+    <string name="DiedToSentinel">Terminated</string>
+    <string name="DiedToSentinelExplosion">Disintegrated</string>
+    <!-- Sentinel - Neutral Killing -->
+    <string name="ExampleRoleSentinel">Sentinel</string>
+    <string name="ExampleRoleSentinelIntroBlurb">Eliminate those who stand in your path.</string>
+    <string name="ExampleRoleSentinelTabDescription">Kill players by using your dope abilities!\%nl\%Preferably, explode \%b\%only\%/b\% in a secluded area.</string>
+    <!-- Sentinel Wiki -->
+    <string name="ExampleRoleSentinelWikiDescription">The Sentinel is a Neutral Killing role that can explode themselves to kill anyone nearby. They may also kill normally, but where's the fun in that?</string>
+    <string name="ExampleRoleSentinelExplode">Explode</string>
+    <string name="ExampleRoleSentinelExplodeWikiDescription">Explode all players nearby.</string>
+    <!-- Infiltrator - Impostor Support -->
+    <string name="ExampleRoleInfiltrator">Infiltrator</string>
+    <string name="ExampleRoleInfiltratorIntroBlurb">Infiltrate and transport your enemies.</string>
+    <string name="ExampleRoleInfiltratorTabDescription">Swap the positions of two players to create chaos among the crew.</string>
+    <!-- Infiltrator Wiki -->
+    <string name="ExampleRoleInfiltratorWikiDescription">The Infiltrator is an Impostor Support role that can transport players to different locations.</string>
+    <string name="ExampleRoleInfiltratorTransport">Transport</string>
+    <string name="ExampleRoleInfiltratorTransportWikiDescription">Swap the positions of two selected players.</string>
+    <!-- Infiltrator Options -->
+    <string name="ExampleOptionInfiltratorTransportCooldown">Transport Cooldown</string>
+    <string name="ExampleOptionInfiltratorCanVent">Infiltrator Can Vent</string>
+    <!-- Evil Swapper - Impostor Meeting Swap -->
+    <string name="TouRoleEvilSwapper">Evil Swapper</string>
+    <string name="TouRoleEvilSwapperIntroBlurb">Select two players during meetings to swap their positions.</string>
+    <string name="TouRoleEvilSwapperTabDescription">The Evil Swapper can mark two players at meetings, forcing them to swap locations later.</string>
+    <string name="TouRoleEvilSwapperWikiDescription">The Evil Swapper is an Impostor role that manipulates meetings to confuse the crew and create chaos.</string>
+    <string name="TouRoleEvilSwapperSwapWiki">Meeting Swap</string>
+    <string name="TouRoleEvilSwapperSwapWikiDescription">Choose two players in meetings to swap their positions the next time the game resumes.</string>
+    <!-- Evil Swapper Options -->
+    <string name="ExampleOptionEvilSwapperCanVent">Evil Swapper Can Vent</string>
+    <string name="ExampleOptionEvilSwapperCanButton">Enable Swap Button</string>
+    <!-- Sentinel Options -->
+    <string name="ExampleOptionSentinelKillCooldown">Kill Cooldown</string>
+    <string name="ExampleOptionSentinelExplodeCooldown">Explode Cooldown</string>
+    <string name="ExampleOptionSentinelExplosionRadius">Explosion Radius</string>
+    <string name="ExampleOptionSentinelCanVent">Sentinel Can Vent</string>
+    <string name="ExampleOptionSentinelImpostorVision">Sentinel Has Impostor Vision</string>
+    <!-- Soul Eater -->
+    <string name="TouRoleSoulEater">Soul Eater</string>
+    <string name="TouRoleSoulEaterIntroBlurb">Devour the souls of your victims.</string>
+    <string name="TouRoleSoulEaterTabDescription">njom</string>
+    <string name="TouRoleSoulEaterWikiDescription">The Soul Eater is an Impostor role that leaves behind soulless husks after killing players.</string>
+    <string name="TouRoleSoulEaterReap">Reap</string>
+    <string name="TouRoleSoulEaterReapWikiDescription">njom</string>
+    <!-- Soul Eater Options -->
+    <string name="TouOptionSoulEaterCanVent">Soul Eater Can Vent</string>
+    <string name="TouRoleSoulEaterReapNotif">ate &lt;player&gt;'s very njom njom soul :P</string>
+</resources>

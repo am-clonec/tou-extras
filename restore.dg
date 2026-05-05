@@ -1,0 +1,123 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\sbrou\\Documents\\AUM\\TouExtras\\TouExtras\\TouExtras.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\sbrou\\Documents\\AUM\\TouExtras\\TouExtras\\TouExtras.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\sbrou\\Documents\\AUM\\TouExtras\\TouExtras\\TouExtras.csproj",
+        "projectName": "TouExtras",
+        "projectPath": "C:\\Users\\sbrou\\Documents\\AUM\\TouExtras\\TouExtras\\TouExtras.csproj",
+        "packagesPath": "C:\\Users\\sbrou\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\sbrou\\Documents\\AUM\\TouExtras\\TouExtras\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\sbrou\\Documents\\AUM\\TouExtras\\NuGet.Config",
+          "C:\\Users\\sbrou\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Users\\sbrou\\Documents\\AUM\\TouExtras\\packages.local\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.bepinex.dev/v3/index.json": {},
+          "https://nuget.reactor.gg/v3/index.json": {},
+          "https://nuget.samboy.dev/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreLockProperties": {
+          "restorePackagesWithLockFile": "true"
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AllOfUs.MiraAPI": {
+              "target": "Package",
+              "version": "[0.3.9-ci.904, )"
+            },
+            "AmongUs.GameLibs.Steam": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2026.3.31, )"
+            },
+            "BepInEx.AutoPlugin": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "BepInEx.IL2CPP.MSBuild": {
+              "include": "Compile, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0-rc.1, )"
+            },
+            "BepInEx.Unity.IL2CPP": {
+              "include": "Compile, Build, ContentFiles, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[6.0.0-be.735, )"
+            },
+            "Reactor": {
+              "target": "Package",
+              "version": "[2.5.0-ci.371, )"
+            },
+            "SonarAnalyzer.CSharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[10.12.0.118525, )"
+            },
+            "TownOfUsMira": {
+              "target": "Package",
+              "version": "[1.6.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

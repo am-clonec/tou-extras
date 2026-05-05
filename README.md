@@ -4,7 +4,7 @@
 -----------------------
 
 <div align="center">
-  <img src="./TouExtensionExample/Resources/ExampleBanner.png" alt="TOU Mira Example Mod"/>
+  <img src="./TouExtras/Resources/ExampleBanner.png" alt="TOU Mira Example Mod"/>
   <p>TOU Mira Example Mod</p>
 </div>
 <br/>
