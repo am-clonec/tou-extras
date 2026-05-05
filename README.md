@@ -1,5 +1,5 @@
 > [!NOTE]
-> This "mod" is **not** meant to be played, and is instead meant to be a framework for TOU Mira extension mods.
+> This "mod" is **yes** meant to be played, and is instead meant to be a framework for TOU Mira extension mods. Except it different :\)
 
 -----------------------
 
@@ -15,7 +15,7 @@ If you want a more broad example for adding roles and modifiers, you can also us
 
 -----------------------
 # License
-This software is distributed under the GNU GPLv3 License. BepInEx is distributed under the LGPL-2.1 License.
+eheheh
 
 # Copyright
 <p align="center">This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC.</p>
