@@ -14,8 +14,53 @@ using TownOfUs.Options.Modifiers.Alliance;
 using TownOfUs.Utilities;
 using UnityEngine;
 using MiraAPI.Utilities;
+using MiraAPI.Modifiers;
+using TouExtras.Modifiers;
 using TownOfUs.Options.Roles.Crewmate;
 using TownOfUs.Roles.Crewmate;
+using TouExtras.Modules;
+
+using AmongUs.GameOptions;
+using Il2CppInterop.Runtime.Attributes;
+using MiraAPI.Events;
+using MiraAPI.GameOptions;
+using MiraAPI.Hud;
+using MiraAPI.LocalSettings;
+using MiraAPI.Modifiers;
+using MiraAPI.Networking;
+using MiraAPI.Patches.Stubs;
+using MiraAPI.Roles;
+using MiraAPI.Utilities;
+using Reactor.Networking.Attributes;
+using Reactor.Utilities;
+using TouExtras.Assets;
+using TouExtras.Buttons.Impostor;
+using TouExtras.Modules;
+using TouExtras.Options.Roles.Impostor;
+using TownOfUs;
+using TownOfUs.Assets;
+using TownOfUs.Buttons.Crewmate;
+using TownOfUs.Buttons.Impostor;
+using TownOfUs.Events.Crewmate;
+using TownOfUs.Events.TouEvents;
+using TownOfUs.Extensions;
+using TownOfUs.Interfaces;
+using TownOfUs.Modifiers;
+using TownOfUs.Modifiers.Crewmate;
+using TownOfUs.Modifiers.Game.Universal;
+using TownOfUs.Modifiers.Impostor;
+using TownOfUs.Modifiers.Neutral;
+using TownOfUs.Modules;
+using TownOfUs.Modules.Localization;
+using TownOfUs.Modules.Wiki;
+using TownOfUs.Options.Roles.Crewmate;
+using TownOfUs.Roles;
+using TownOfUs.Roles.Crewmate;
+using TownOfUs.Roles.Impostor;
+using TownOfUs.Roles.Neutral;
+using TownOfUs.Utilities;
+using UnityEngine;
+using HarmonyLib;
 
 namespace TouExtras.Buttons.Impostor;
 
@@ -68,7 +113,16 @@ public sealed class BakerBakeButton : TownOfUsRoleButton<BakerRole>
                 }
 
                 BakerRole.RpcPlaceMuffin(PlayerControl.LocalPlayer, PlayerControl.LocalPlayer.transform.position, plr);
-                
+                plr.RpcAddModifier<HangryModifier>();
+                var hangryPlayers = ModifierUtils.GetPlayersWithModifier<HangryModifier>();
+                hangryPlayers.Do(x =>
+                {
+                    var notif1 = Helpers.CreateAndShowNotification(
+                        TouLocale.GetParsed("TouRoleBakerCravingNotif", "You really want a muffin right now..."),
+                        Color.white, new Vector3(0f, 1f, -20f), spr: TouRoleIcons.Chef.LoadAsset());
+                    notif1.AdjustNotification();
+                });
+                ExtrasGlobalVars.MuffinPos = PlayerControl.LocalPlayer.transform.position;
             }
         );
         foreach (var panel in player1Menu.potentialVictims)

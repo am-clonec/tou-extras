@@ -51,4 +51,8 @@
     <!-- Soul Eater Options -->
     <string name="TouOptionSoulEaterCanVent">Soul Eater Can Vent</string>
     <string name="TouRoleSoulEaterReapNotif">ate &lt;player&gt;'s very njom njom soul :P</string>
+    <!-- Hangry -->
+    <string name="TouModifierHangryEatButton">Eat</string>
+    <string name="DiedToBakerMuffin">Didn't satisfy hunger</string>
+    <string name="TouRoleBakerCravingNotif">You really want a muffin right now...</string>
 </resources>

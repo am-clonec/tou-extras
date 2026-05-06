@@ -25,6 +25,7 @@ using Reactor.Networking.Attributes;
 using TouExtras.Assets;
 using TouExtras.Buttons.Impostor;
 using TouExtras.Options.Roles.Impostor;
+using TouExtras.Modifiers;
 using TownOfUs;
 using TownOfUs.Assets;
 using TownOfUs.Buttons.Crewmate;
@@ -83,12 +84,16 @@ public sealed class Muffin : IDisposable
             _obj.Destroy();
             yield break;
         }
-        PlayerControl.LocalPlayer.RpcSpecialMurder(
+        if (target.HasModifier<HangryModifier>())
+        {
+            PlayerControl.LocalPlayer.RpcSpecialMurder(
                     target,
                     teleportMurderer: false,
                     showKillAnim: false,
                     causeOfDeath: "BakerMuffin");
 
+            
+        }
         _obj.Destroy();
     }
 
