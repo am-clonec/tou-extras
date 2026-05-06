@@ -11,8 +11,8 @@ public sealed class BakerOptions : AbstractOptionGroup<BakerRole>
 {
     public override string GroupName => TouLocale.Get("ExampleRoleBaker", "Baker");
 
-    [ModdedNumberOption("ExampleOptionBakerMuffinCooldown", 5f, 120f, 2.5f, MiraNumberSuffixes.Seconds)]
-    public float MuffinCooldown { get; set; } = 30f;
+    [ModdedNumberOption("ExampleOptionBakerBakeCooldown", 5f, 120f, 2.5f, MiraNumberSuffixes.Seconds)]
+    public float BakeCooldown { get; set; } = 30f;
 
     [ModdedNumberOption("ExampleOptionBakerMuffinTime", 1f, 60f, 1f, MiraNumberSuffixes.Seconds)]
     public float MuffinTime { get; set; } = 15f;

@@ -60,14 +60,14 @@ public sealed class BakerBakeButton : TownOfUsRoleButton<BakerRole>
                    (plr.moveable || plr.inVent),
             plr =>
             {
-                player1Menu.ForceClose();
+                player1Menu.Close();
 
                 if (plr == null)
                 {
                     return;
                 }
 
-                
+                BakerRole.RpcPlaceMuffin(PlayerControl.LocalPlayer, PlayerControl.LocalPlayer.transform.position, plr);
                 
             }
         );

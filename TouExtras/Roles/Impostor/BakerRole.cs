@@ -39,14 +39,14 @@ using TownOfUs.Roles.Neutral;
 using TownOfUs.Utilities;
 using UnityEngine;
 
+
 namespace TouExtras.Roles.Impostor;
 
 public sealed class BakerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRole, IWikiDiscoverable
 {
 
 
-    [HideFromIl2Cpp] public PlayerVoteArea? Swap1 { get; set; }
-    [HideFromIl2Cpp] public PlayerVoteArea? Swap2 { get; set; }
+    [HideFromIl2Cpp] public Muffin? Muffie { get; set; }
     public string LocaleKey => "Baker";
     public string RoleName => TouLocale.Get($"TouRole{LocaleKey}");
     public string RoleDescription => TouLocale.GetParsed($"TouRole{LocaleKey}IntroBlurb");
@@ -107,7 +107,7 @@ public sealed class BakerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRo
     }
 
 [MethodRpc((uint)TownOfUsRpc.PlantBomb)]
-    public static void RpcPlaceMuffin(PlayerControl player, Vector2 position)
+    public static void RpcPlaceMuffin(PlayerControl player, Vector2 position, PlayerControl target)
     {
         if (LobbyBehaviour.Instance)
         {
@@ -123,12 +123,12 @@ public sealed class BakerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRo
 
         if (player.AmOwner)
         {
-            role.Muffin = Muffin.CreateMuffin(player, position);
+            role.Muffie = Muffin.CreateMuffin(player, position);
         }
-        else if (OptionGroupSingleton<BakerOptions>.Instance.AllImpsSeeBomb && PlayerControl.LocalPlayer.IsImpostorAligned())
-        {
-            Coroutines.Start(Muffin.MuffinShowTeammate(player, position));
-        }
+        
+        Coroutines.Start(Muffin.MuffinShowTarget(target, position));
+        role.Muffie?.Detonate(target);
+        
         
     }
     

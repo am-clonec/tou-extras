@@ -48,11 +48,11 @@ using TownOfUs.Roles.Impostor;
 using TownOfUs.Roles.Neutral;
 using TownOfUs.Utilities;
 
-
+using TouExtras.Modules;
 
 namespace TouExtras.Modules;
 
-// Code Review: Should be using a MonoBehaviour
+
 public sealed class Muffin : IDisposable
 {
     private PlayerControl? _baker;
@@ -65,18 +65,18 @@ public sealed class Muffin : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    public void Detonate()
+    public void Detonate(PlayerControl target)
     {
-        Coroutines.Start(CoDetonate());
+        Coroutines.Start(CoDetonate(target));
     }
 
-    private IEnumerator CoDetonate()
+    public IEnumerator CoDetonate(PlayerControl target)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(OptionGroupSingleton<BakerOptions>.Instance.MuffinTime);
 
         
 
-        var target = GameData.Instance.GetPlayerById(targetId);
+        
 
         if (MeetingHud.Instance || ExileController.Instance)
         {
@@ -87,7 +87,7 @@ public sealed class Muffin : IDisposable
                     target,
                     teleportMurderer: false,
                     showKillAnim: false,
-                    causeOfDeath: "Parasite");
+                    causeOfDeath: "BakerMuffin");
 
         _obj.Destroy();
     }
@@ -97,16 +97,18 @@ public sealed class Muffin : IDisposable
         return new Muffin
         {
             _obj = MiscUtils.CreateSpherePrimitive(location,
-                OptionGroupSingleton<BomberOptions>.Instance.DetonateRadius),
+                0.1f),
             _baker = player
         };
+        
     }
 
-    public static IEnumerator MuffinShowTeammate(PlayerControl player, Vector3 location)
+
+    public static IEnumerator MuffinShowTarget(PlayerControl player, Vector3 location)
     {
         var muffin = CreateMuffin(player, location);
 
-        yield return new WaitForSeconds(OptionGroupSingleton<BomberOptions>.Instance.DetonateDelay);
+        yield return new WaitForSeconds(OptionGroupSingleton<BakerOptions>.Instance.MuffinTime);
 
         try
         {
