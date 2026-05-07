@@ -74,7 +74,7 @@ public sealed class BakerBakeButton : TownOfUsRoleButton<BakerRole>
 
     public override LoadableAsset<Sprite> Sprite => TouCrewAssets.Transport;
 
-    public override void ClickHandler()
+    /*public override void ClickHandler()
     {
         if (!CanClick())
         {
@@ -82,7 +82,7 @@ public sealed class BakerBakeButton : TownOfUsRoleButton<BakerRole>
         }
 
         OnClick();
-    }
+    }*/
 
     protected override void OnClick()
     {
@@ -116,7 +116,7 @@ public sealed class BakerBakeButton : TownOfUsRoleButton<BakerRole>
                 
                 
 
-                
+                ExtrasGlobalVars.MuffinTarget = plr;
                 ExtrasGlobalVars.MuffinPos = PlayerControl.LocalPlayer.transform.position;
             }
         );

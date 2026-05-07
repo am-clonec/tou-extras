@@ -84,6 +84,7 @@ using UnityEngine;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Il2CppMono.Security.Authenticode;
+using System.Collections;
 
 
 
@@ -95,15 +96,21 @@ public sealed class HangryModifier : BaseModifier
     public override string ModifierName => "Hangry";
     public override bool HideOnUi => true;
 
-
+    public IEnumerator GotMuffined(PlayerControl target)
+    {
+        /*not yet */
+    }
     public override void OnActivate()
     {
-        
-        var notif1 = Helpers.CreateAndShowNotification(
+        Coroutines.Start(GotMuffined(PlayerControl.LocalPlayer));
+        ExtrasGlobalVars.MuffinTarget.ToArray().Do(x =>
+        Helpers.CreateAndShowNotification(
             TouLocale.GetParsed("TouRoleBakerCravingNotif", "You really want a muffin right now..."),
             Color.white, new Vector3(0f, 1f, -20f), spr: TouRoleIcons.Chef.LoadAsset());
-        notif1.AdjustNotification();
-        Muffin.CreateMuffin(PlayerControl.LocalPlayer, ExtrasGlobalVars.MuffinPos);
+        
+        Muffin.CreateMuffin(ExtrasGlobalVars.MuffinTarget, ExtrasGlobalVars.MuffinPos);
+        );
+
     }
     public override void OnDeactivate()
     {
