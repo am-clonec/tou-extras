@@ -106,7 +106,7 @@ public sealed class PreHangryModifier : TimedModifier
     }
     public override void OnDeactivate()
     {
-        if (PlayerControl.LocalPlayer == ExtrasGlobalVars.MuffinTarget)
+        if (PlayerControl.LocalPlayer == ExtrasGlobalVars.MuffinTarget || PlayerControl.LocalPlayer.PlayerId == ExtrasGlobalVars.MuffinTarget.PlayerId)
         {
         
         Helpers.CreateAndShowNotification(

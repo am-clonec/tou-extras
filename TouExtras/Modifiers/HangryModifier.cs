@@ -85,7 +85,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using Il2CppMono.Security.Authenticode;
 using System.Collections;
-
+using TownOfUs.Utilities.Appearances;
 using System.Collections;
 using MiraAPI.GameOptions;
 using MiraAPI.Modifiers;
@@ -104,6 +104,18 @@ using MiraAPI.Events;
 
 using MiraAPI.Hud;
 using MiraAPI.LocalSettings;
+
+using MiraAPI.Events;
+using MiraAPI.GameOptions;
+using MiraAPI.Hud;
+using MiraAPI.Modifiers;
+using TownOfUs.Buttons.Impostor;
+using TownOfUs.Events.TouEvents;
+using TownOfUs.Options;
+using TownOfUs.Options.Roles.Impostor;
+using TownOfUs.Patches;
+using TownOfUs.Utilities.Appearances;
+using UnityEngine;
 
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
@@ -154,15 +166,19 @@ public sealed class HangryModifier : TimedModifier
 
     public override void OnActivate()
     {
+        if (PlayerControl.LocalPlayer == Player)
+        {
         Muffie = Muffin.CreateMuffin(ExtrasGlobalVars.MuffinTarget, ExtrasGlobalVars.MuffinPos);
-        
+        Helpers.CreateAndShowNotification(
+            TouLocale.GetParsed("TouRoleBakerCravingNotif", "You really want a muffin right now..."),
+            Color.white, new Vector3(0f, 1f, -20f), spr: TouRoleIcons.Chef.LoadAsset());
+        }
         
 
     }
     public override void OnDeath(DeathReason reason)
     {
-        
-        ExtrasGlobalVars.MuffinTarget.RpcRemoveModifier<HangryModifier>();
+        Player.RpcRemoveModifier<HangryModifier>();
     }
     public override void OnDeactivate()
     {
