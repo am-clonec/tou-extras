@@ -61,54 +61,10 @@ using TownOfUs.Options.Roles.Impostor;
 using TownOfUs.Options;
 using TownOfUs.Patches;
 
-
-
-
-
-
 namespace TouExtras.Modifiers;
 
-public sealed class HangryModifier() : BaseModifier
+public sealed class BowTieInactiveModifier() : BaseModifier
 {
-    [HideFromIl2Cpp] public Muffin? Muffie { get; set; }
-    public override string ModifierName => "Hangry";
-    public override bool HideOnUi => false;
-
-
-    public override void OnActivate()
-    {
-        if (PlayerControl.LocalPlayer == Player)
-        {
-        Muffie = Muffin.CreateMuffin(ExtrasGlobalVars.MuffinTarget, ExtrasGlobalVars.MuffinPos);
-        Helpers.CreateAndShowNotification(
-            TouLocale.GetParsed("TouRoleBakerCravingNotif", "You really want a muffin right now..."),
-            Color.white, new Vector3(0f, 1f, -20f), spr: TouRoleIcons.Chef.LoadAsset());
-        }
-        
-
-    }
-    public override void OnDeath(DeathReason reason)
-    {
-        Player.RpcRemoveModifier<HangryModifier>();
-    }
-    public override void OnDeactivate()
-    {
-        if (PlayerControl.LocalPlayer == ExtrasGlobalVars.MuffinTarget || PlayerControl.LocalPlayer.PlayerId == ExtrasGlobalVars.MuffinTarget.PlayerId)
-        {
-        Muffie?.Destroy();
-        /*
-        if (!ExtrasGlobalVars.MuffinEaten)
-        {
-        PlayerControl.LocalPlayer.RpcSpecialMurder(
-                    PlayerControl.LocalPlayer,
-                    teleportMurderer: false,
-                    showKillAnim: false,
-                    causeOfDeath: "BakerMuffin",
-                    resetKillTimer: false);
-        }
-        */
-        }
-        
-    }
-
+    public override string ModifierName => "Bow Tie Inactive";
+    public override bool HideOnUi => true;
 }

@@ -126,6 +126,8 @@ public sealed class BakerBakeButton : TownOfUsRoleButton<BakerRole>
 
         private void DoThing(PlayerControl plr)
             {
+                if (!plr.IsRole<PestilenceRole>())
+                {       
                 plr.AddModifier<HangryModifier>();
                 
                 
@@ -138,12 +140,21 @@ public sealed class BakerBakeButton : TownOfUsRoleButton<BakerRole>
 
                 EffectActive = true;
                 Timer = EffectDuration;
+                } else {
+                plr.RpcSpecialMurder(
+                PlayerControl.LocalPlayer,
+                teleportMurderer: false,
+                showKillAnim: true,
+                causeOfDeath: "Pestilence",
+                resetKillTimer: false);
+                }
 
             }
 
     public void ForceEffectEnd()
     {
         Timer = 0f;
+        ResetCooldownAndOrEffect();
     }
     public override void OnEffectEnd()
     {
@@ -163,5 +174,6 @@ public sealed class BakerBakeButton : TownOfUsRoleButton<BakerRole>
             TouLocale.GetParsed("TouRoleBakerTargetSatisfiedCravingNotif", "Your craving victim satisfied their hunger with your delicious muffin! They survived."),
             Color.white, new Vector3(0f, 1f, -20f), spr: TouRoleIcons.Chef.LoadAsset());
         }
+        EffectActive = false;
     }
 }

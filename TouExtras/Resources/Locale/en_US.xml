@@ -68,4 +68,12 @@
 
     <string name="TouRoleBakerKilledThroughCravingNotif">Your craving victim couldn't find your delicious muffin in time... They died.</string>
     <string name="TouRoleBakerTargetSatisfiedCravingNotif">Your craving victim satisfied their hunger with your delicious muffin! They survived.</string>
+
+    <!-- Bow Tie Options -->
+    <string name="TouExtrasOptionBowTypePinkTie">Pink Tie</string>
+    <string name="TouExtrasOptionBowTypeAstronaut">Astronaut</string>
+    <string name="TouExtrasOptionBowTypePirate">Pirate</string>
+    <string name="TouExtrasOptionBowTypeParty">Party</string>
+
+    <string name="TouExtrasOptionBowType">Hat Type</string>
 </resources>

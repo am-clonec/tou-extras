@@ -1,5 +1,6 @@
 using AmongUs.GameOptions;
 using Il2CppInterop.Runtime.Attributes;
+using Il2CppSystem.Runtime.InteropServices;
 using JetBrains.Annotations;
 using MiraAPI.Events;
 using MiraAPI.GameOptions;
@@ -39,7 +40,19 @@ using TownOfUs.Roles.Impostor;
 using TownOfUs.Roles.Neutral;
 using TownOfUs.Utilities;
 using UnityEngine;
-
+using MiraAPI.Utilities.Assets;
+using TownOfUs.Events;
+using TownOfUs.Options.Modifiers.Universal;
+using MiraAPI.Patches;
+using MiraAPI.Keybinds;
+using TouExtras.Roles.Impostor;
+using TouExtras.Roles.Neutral;
+using TownOfUs.Buttons;
+using TownOfUs.Options.Modifiers.Alliance;
+using TouExtras.Modifiers;
+using Reactor.Networking;
+using HarmonyLib;
+using Rewired;
 
 namespace TouExtras.Roles.Impostor;
 
@@ -48,6 +61,8 @@ public sealed class BakerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRo
 
 
     [HideFromIl2Cpp] public Muffin? Muffie { get; set; }
+    [HideFromIl2Cpp] public BakerBakeButton? BakeButton { get; set; }
+
     public string LocaleKey => "Baker";
     public string RoleName => TouLocale.Get($"TouRole{LocaleKey}");
     public string RoleDescription => TouLocale.GetParsed($"TouRole{LocaleKey}IntroBlurb");
@@ -74,7 +89,7 @@ public sealed class BakerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRo
         }
     }
 
-    public Color RoleColor => TownOfUsColors.Swapper;
+    public Color RoleColor => TownOfUsColors.Chef;
     public ModdedRoleTeams Team => ModdedRoleTeams.Impostor;
     public RoleAlignment RoleAlignment => RoleAlignment.ImpostorPower;
     
@@ -93,7 +108,7 @@ public sealed class BakerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRo
     public override void Initialize(PlayerControl player)
     {
         RoleBehaviourStubs.Initialize(this, player);
-        
+        BakeButton = new BakerBakeButton();
         var options = OptionGroupSingleton<BakerOptions>.Instance;
 
     }
@@ -105,6 +120,11 @@ public sealed class BakerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRo
         RoleBehaviourStubs.Deinitialize(this, targetPlayer);
 
         
+    }
+
+    public void ForceEffectEnd()
+    {
+        BakeButton?.ForceEffectEnd();
     }
 
 [MethodRpc((uint)TownOfUsRpc.PlantBomb)]
@@ -132,6 +152,7 @@ public sealed class BakerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRo
         
         
     }
+
 
 
     

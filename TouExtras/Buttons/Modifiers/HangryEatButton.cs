@@ -16,6 +16,7 @@ using MiraAPI.Networking;
 using MiraAPI.Patches.Stubs;
 using MiraAPI.Roles;
 using MiraAPI.Utilities;
+using MiraAPI.Patches;
 using Reactor.Utilities;
 using TouExtras.Assets;
 using TouExtras.Buttons.Impostor;
@@ -51,12 +52,16 @@ using TownOfUs.Options.Modifiers.Alliance;
 
 
 using TouExtras.Modifiers;
+using Reactor.Networking;
+using HarmonyLib;
+using Rewired;
 
 namespace TownOfUs.Buttons.Modifiers;
 
 public sealed class HangryEatButton : TownOfUsButton
 {
     [HideFromIl2Cpp] public Muffin? Muffie { get; set; }
+
     public override float Cooldown => 0f;
 
     public override string Name => TouLocale.GetParsed("TouModifierHangryEatButton", "Eat");
@@ -64,6 +69,7 @@ public sealed class HangryEatButton : TownOfUsButton
     public override Color TextOutlineColor => TownOfUsColors.ButtonBarry;
     public override ButtonLocation Location => ButtonLocation.BottomLeft;
     public override LoadableAsset<Sprite> Sprite => TouAssets.BarryButtonSprite;
+    public PlayerControl baker = PlayerControl.LocalPlayer;
     
     public override bool Enabled(RoleBehaviour? role)
     {
@@ -81,11 +87,13 @@ public sealed class HangryEatButton : TownOfUsButton
     protected override void OnClick()
     {
         Muffie?.Destroy();
-        PlayerControl.LocalPlayer.RemoveModifier<HangryModifier>();
+        PlayerControl.LocalPlayer.RpcRemoveModifier<HangryModifier>();
         ExtrasGlobalVars.MuffinEaten = true;
         Helpers.CreateAndShowNotification(
             TouLocale.GetParsed("TouRoleBakerCravingSatisfiedNotif", "You eat the muffin and feel satisfied!"),
             Color.white, new Vector3(0f, 1f, -20f), spr: TouRoleIcons.Chef.LoadAsset());
-        ExtrasGlobalVars.MuffinTarget.AddModifier<HangryModifier>();
+
+
+        
     }
 }
