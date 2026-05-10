@@ -60,6 +60,7 @@ using TownOfUs.Networking;
 using TownOfUs.Options.Roles.Impostor;
 using TownOfUs.Options;
 using TownOfUs.Patches;
+using TouExtras.Options.Modifiers.NeutImp;
 
 
 
@@ -73,6 +74,8 @@ public sealed class HangryModifier() : BaseModifier
     [HideFromIl2Cpp] public Muffin? Muffie { get; set; }
     public override string ModifierName => "Hangry";
     public override bool HideOnUi => false;
+
+
 
 
     public override void OnActivate()
