@@ -63,17 +63,18 @@ using TownOfUs.Patches;
 using TouExtras.Options.Modifiers.NeutImp;
 
 
-
-
-
-
 namespace TouExtras.Modifiers;
 
 public sealed class HangryModifier() : BaseModifier
 {
     [HideFromIl2Cpp] public Muffin? Muffie { get; set; }
     public override string ModifierName => "Hangry";
-    public override bool HideOnUi => false;
+
+    public override string GetDescription()
+    {
+        return "e a t";
+    }
+
 
 
 

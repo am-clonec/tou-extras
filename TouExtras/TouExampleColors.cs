@@ -10,6 +10,7 @@ public static class TouExampleColors
     public static Color Chameleon => TownOfUsColors.UseBasic ? Palette.CrewmateBlue : new Color32(81, 180, 154, 255);
     // Neutral Colors
     public static Color Sentinel => new Color32(143, 162, 141, 255);
+    public static Color Fortegreen => new Color32(38, 166, 98, 255);
     // Impostor Colors
 
     // Modifier Colors
