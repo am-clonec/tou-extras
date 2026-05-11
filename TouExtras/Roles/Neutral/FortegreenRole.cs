@@ -56,7 +56,7 @@ public sealed class FortegreenRole(IntPtr cppPtr)
     public string RoleName => TouLocale.Get($"ExampleRole{LocaleKey}");
     public string RoleDescription => TouLocale.GetParsed($"ExampleRole{LocaleKey}IntroBlurb");
     public string RoleLongDescription => TouLocale.GetParsed($"ExampleRole{LocaleKey}TabDescription");
-
+    public bool Transformed { get; set; }
     public string GetAdvancedDescription()
     {
         return
@@ -81,10 +81,11 @@ public sealed class FortegreenRole(IntPtr cppPtr)
     public Color RoleColor => TouExampleColors.Fortegreen;
     public ModdedRoleTeams Team => ModdedRoleTeams.Custom;
     public RoleAlignment RoleAlignment => RoleAlignment.NeutralKilling;
+    public float Level => 0f;
 
     public CustomRoleConfiguration Configuration => new(this)
     {
-        CanUseVent = OptionGroupSingleton<SentinelOptions>.Instance.CanVent,
+        CanUseVent = (OptionGroupSingleton<BakerOptions>.Instance.BakeCooldown <= Level),
         IntroSound = TouAudio.GlitchSound,
         Icon = ExampleRoleIcons.Sentinel,
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>()
@@ -108,7 +109,7 @@ public sealed class FortegreenRole(IntPtr cppPtr)
     {
         var canVent = OptionGroupSingleton<SentinelOptions>.Instance.CanVent || LocalSettingsTabSingleton<TownOfUsLocalSettings>.Instance.OffsetButtonsToggle.Value;
         var douse = CustomButtonSingleton<SentinelExplodeButton>.Instance;
-        var ignite = CustomButtonSingleton<SentinelKillButton>.Instance;
+        var ignite = CustomButtonSingleton<FortegreenKillButton>.Instance;
         Coroutines.Start(MiscUtils.CoMoveButtonIndex(douse, !canVent));
         Coroutines.Start(MiscUtils.CoMoveButtonIndex(ignite, !canVent));
     }
