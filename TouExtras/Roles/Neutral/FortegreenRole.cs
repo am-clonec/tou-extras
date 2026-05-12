@@ -43,12 +43,13 @@ using TownOfUs.Modifiers.Game.Universal;
 using TownOfUs.Modifiers.Impostor;
 using TownOfUs.Modifiers.Neutral;
 using TownOfUs.Modules;
+using TownOfUs.Utilities.Appearances;
 
 
 namespace TouExtras.Roles.Neutral;
 
 public sealed class FortegreenRole(IntPtr cppPtr)
-    : NeutralRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, ICrewVariant
+    : NeutralRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, ICrewVariant, IVisualAppearance
 {
     public RoleBehaviour CrewVariant => RoleManager.Instance.GetRole((RoleTypes)RoleId.Get<TrapperRole>());
     
@@ -56,7 +57,7 @@ public sealed class FortegreenRole(IntPtr cppPtr)
     public string RoleName => TouLocale.Get($"ExampleRole{LocaleKey}");
     public string RoleDescription => TouLocale.GetParsed($"ExampleRole{LocaleKey}IntroBlurb");
     public string RoleLongDescription => TouLocale.GetParsed($"ExampleRole{LocaleKey}TabDescription");
-    public bool Transformed { get; set; }
+    public bool Transformed { get; set; } = false;
     public string GetAdvancedDescription()
     {
         return
@@ -64,6 +65,63 @@ public sealed class FortegreenRole(IntPtr cppPtr)
             MiscUtils.AppendOptionsText(GetType());
     }
 
+        public VisualAppearance GetVisualAppearance()
+    {
+        var nameColor = new Color(1f, 0.8392156863f, 0.9254901961f, 1f);
+        var hatId = "hat_bsb2_bowPink";
+        var skinId = "skin_None";
+        var visorId = "visor_Blush";
+        var colorId = 13;
+        var name = "Rose";
+        var material1 = new Color(0.1490196078f, 0.6509803922f, 0.3843137255f, 1f);
+        var material2 = new Color(0.07058823529f, 0.631372549f, 0.2823529412f, 1f);
+        var material3 = new Color(0.01176470588f, 0.05490196078f, 0.01960784314f, 1f);
+        
+        if (Transformed)
+        {
+            nameColor = new Color(1f, 0.5725490196f, 0.7019607843f, 1f);
+            hatId = "hat_None";
+            skinId = "skin_None";
+            visorId = "visor_None";
+            colorId = 9483643;
+            name = "Fortegreen";
+            material1 = new Color(0.1490196078f, 0.6509803922f, 0.3843137255f, 1f);
+            material2 = new Color(0.07058823529f, 0.631372549f, 0.2823529412f, 1f);
+            material3 = new Color(0.01176470588f, 0.05490196078f, 0.01960784314f, 1f);
+        } else
+        {
+            nameColor = Player.GetDefaultModifiedAppearance().NameColor ?? Color.white;
+            hatId = Player.GetDefaultModifiedAppearance().HatId ?? "hat_None";
+            skinId = Player.GetDefaultModifiedAppearance().SkinId ?? "skin_None";
+            visorId = Player.GetDefaultModifiedAppearance().VisorId ?? "visor_None";
+            colorId = Player.GetDefaultModifiedAppearance().ColorId;
+            name = Player.GetDefaultModifiedAppearance().PlayerName ?? PlayerControl.LocalPlayer.name;
+            material1 = Player.GetDefaultModifiedAppearance().PlayerMaterialColor ?? Color.white;
+            material2 = Player.GetDefaultModifiedAppearance().PlayerMaterialBackColor ?? Color.white;
+            material3 = Player.GetDefaultModifiedAppearance().RendererColor;
+        }
+        
+        
+            
+        
+
+
+        return new VisualAppearance(Player.GetDefaultModifiedAppearance(), TownOfUsAppearances.Swooper)
+        {
+            HatId = hatId,
+            SkinId = skinId,
+            VisorId = visorId,
+            PlayerName = name,
+            PetId = "pet_EmptyPet",
+            ColorId = colorId,
+            NameColor = nameColor,
+            ColorBlindTextColor = Color.clear,
+
+            /*PlayerMaterialColor = material1,
+            PlayerMaterialBackColor = material2,
+            /*RendererColor = material3,*/
+        };
+    }
     [HideFromIl2Cpp]
     public List<CustomButtonWikiDescription> Abilities
     {
@@ -81,17 +139,27 @@ public sealed class FortegreenRole(IntPtr cppPtr)
     public Color RoleColor => TouExampleColors.Fortegreen;
     public ModdedRoleTeams Team => ModdedRoleTeams.Custom;
     public RoleAlignment RoleAlignment => RoleAlignment.NeutralKilling;
-    public float Level => 0f;
+    public float Level { get; set; } = 0f;
 
     public CustomRoleConfiguration Configuration => new(this)
     {
-        CanUseVent = (OptionGroupSingleton<BakerOptions>.Instance.BakeCooldown <= Level),
+        CanUseVent = OptionGroupSingleton<FortegreenOptions>.Instance.CanVentAtLvl <= Level,
         IntroSound = TouAudio.GlitchSound,
         Icon = ExampleRoleIcons.Sentinel,
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>()
     };
 
-    public bool HasImpostorVision => OptionGroupSingleton<SentinelOptions>.Instance.ImpostorVision;
+    public void SetVisApp()
+    {
+        Player.RawSetAppearance(this);
+    }
+    public void ResetVisApp()
+    {
+        Player.ResetAppearance();
+    }
+
+
+    public bool HasImpostorVision => OptionGroupSingleton<FortegreenOptions>.Instance.ImpostorVision <= Level;
 
     public bool WinConditionMet()
     {
@@ -107,10 +175,10 @@ public sealed class FortegreenRole(IntPtr cppPtr)
 
     public void OffsetButtons()
     {
-        var canVent = OptionGroupSingleton<SentinelOptions>.Instance.CanVent || LocalSettingsTabSingleton<TownOfUsLocalSettings>.Instance.OffsetButtonsToggle.Value;
-        var douse = CustomButtonSingleton<SentinelExplodeButton>.Instance;
+        var canVent = OptionGroupSingleton<FortegreenOptions>.Instance.CanVentAtLvl <= Level || LocalSettingsTabSingleton<TownOfUsLocalSettings>.Instance.OffsetButtonsToggle.Value;
+        var transform = CustomButtonSingleton<FortegreenTransformButton>.Instance;
         var ignite = CustomButtonSingleton<FortegreenKillButton>.Instance;
-        Coroutines.Start(MiscUtils.CoMoveButtonIndex(douse, !canVent));
+        Coroutines.Start(MiscUtils.CoMoveButtonIndex(transform, !canVent));
         Coroutines.Start(MiscUtils.CoMoveButtonIndex(ignite, !canVent));
     }
 

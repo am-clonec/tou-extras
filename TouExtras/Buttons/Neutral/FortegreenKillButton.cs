@@ -49,6 +49,7 @@ public sealed class FortegreenKillButton : TownOfUsKillRoleButton<FortegreenRole
     {
         return base.CanUse() && Role.Transformed;
     }
+
     protected override void OnClick()
     {
         if (Target == null)
@@ -58,5 +59,10 @@ public sealed class FortegreenKillButton : TownOfUsKillRoleButton<FortegreenRole
         }
 
         PlayerControl.LocalPlayer.RpcCustomMurder(Target);
+
+        if (Role.Level < 3)
+        {
+            Role.Level = Role.Level + 1;
+        }
     }
 }
