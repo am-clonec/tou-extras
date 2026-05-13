@@ -22,6 +22,10 @@ public sealed class FortegreenOptions : AbstractOptionGroup<FortegreenRole>
     public float TransformTime { get; set; } = 15f;
     [ModdedNumberOption("ExampleOptionFortegreenDisguiseCooldown", 5f, 120f, 2.5f, MiraNumberSuffixes.Seconds)]
     public float DisguiseCooldown { get; set; } = 30f;
+    [ModdedNumberOption("ExampleOptionFortegreenDisguiseTime", 5f, 120f, 2.5f, MiraNumberSuffixes.Seconds)]
+    public float DisguiseTime { get; set; } = 15f;
+    [ModdedNumberOption("ExampleOptionFortegreenDisguiseTimeMulti", 1f, 3f, 0.5f, MiraNumberSuffixes.Multiplier)]
+    public float DisguiseMultiplier { get; set; } = 1.5f;
     [ModdedNumberOption("ExampleOptionFortegreenTransformTimeMultiplier", 1f, 3f, 0.5f, MiraNumberSuffixes.Multiplier)]
     public float TransformTimeMultiplier { get; set; } = 2f;
 

@@ -23,18 +23,17 @@ public sealed class FortegreenKillButton : TownOfUsKillRoleButton<FortegreenRole
     public override Color TextOutlineColor => TouExampleColors.Fortegreen;
     public override float Cooldown => Math.Clamp(OptionGroupSingleton<FortegreenOptions>.Instance.KillCooldown + MapCooldown, 5f, 120f);
     public override LoadableAsset<Sprite> Sprite => ExampleNeutAssets.SentinelKillSprite;
-
     public override void CreateButton(Transform parent)
     {
         base.CreateButton(parent);
         Coroutines.Start(MiscUtils.CoMoveButtonIndex(this, false));
     }
-
     public void SetDiseasedTimer(float multiplier)
     {
         SetTimer(Cooldown * multiplier);
     }
 
+    
     public override PlayerControl? GetTarget()
     {
         if (!OptionGroupSingleton<LoversOptions>.Instance.LoversKillEachOther && PlayerControl.LocalPlayer.IsLover())
@@ -63,6 +62,7 @@ public sealed class FortegreenKillButton : TownOfUsKillRoleButton<FortegreenRole
         if (Role.Level < 3)
         {
             Role.Level = Role.Level + 1;
+            Role.Reload();
         }
     }
 }

@@ -86,6 +86,7 @@ public sealed class FortegreenTransformButton : TownOfUsRoleButton<FortegreenRol
 
 
 
+
     public override void CreateButton(Transform parent)
     {
         base.CreateButton(parent);
@@ -94,24 +95,26 @@ public sealed class FortegreenTransformButton : TownOfUsRoleButton<FortegreenRol
 
     public static float EffDur()
     {
+        var fortegreen = PlayerControl.LocalPlayer.Data.Role as FortegreenRole;
         if (CustomRoleSingleton<FortegreenRole>.Instance.Level < 3)
         {
-            return Math.Clamp(OptionGroupSingleton<FortegreenOptions>.Instance.TransformTime * ((OptionGroupSingleton<FortegreenOptions>.Instance.TransformTimeMultiplier * CustomRoleSingleton<FortegreenRole>.Instance.Level) + 1), 5f, 30f);
+            return Math.Clamp(OptionGroupSingleton<FortegreenOptions>.Instance.TransformTime * ((OptionGroupSingleton<FortegreenOptions>.Instance.TransformTimeMultiplier * fortegreen.Level) + 1), 5f, 30f);
         } else
         {
-            return 999999f;
+            return 120f;
         }
     }
 
     public static float CD()
     {
-        if (CustomRoleSingleton<FortegreenRole>.Instance.Level < 3)
-        {
-            return Math.Clamp(OptionGroupSingleton<FortegreenOptions>.Instance.TransformCooldown, 5f, 120f);
-        } else
-        {
-            return 0f;
-        }
+        var fortegreen = PlayerControl.LocalPlayer.Data.Role as FortegreenRole;
+        return Math.Clamp(OptionGroupSingleton<FortegreenOptions>.Instance.TransformCooldown - (OptionGroupSingleton<FortegreenOptions>.Instance.TransformCooldown / 3 * fortegreen.Level), 0f, 120f);
+
+    }
+
+    public void Reload()
+    {
+        SetTimer(CD());
     }
 
 
@@ -149,6 +152,7 @@ public sealed class FortegreenTransformButton : TownOfUsRoleButton<FortegreenRol
             Timer = EffectDuration;
             Role.SetVisApp();
             EffectActive = true;
+            
         }
         else
         {
@@ -161,5 +165,7 @@ public sealed class FortegreenTransformButton : TownOfUsRoleButton<FortegreenRol
         Role.Transformed = false;
         Role.ResetVisApp();
         EffectActive = false;
+        Reload();
+
     }
 }
