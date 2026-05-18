@@ -55,6 +55,7 @@ using HarmonyLib;
 using Rewired;
 using TMPro;
 using TownOfUs.Utilities.Appearances;
+using System.Security;
 
 namespace TownOfTransformation.Roles.Impostor;
 public sealed class SkibidiToiletRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IVisualAppearance
@@ -101,10 +102,17 @@ public sealed class SkibidiToiletRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITo
 
         public VisualAppearance GetVisualAppearance()
     {
+        var name = Player.GetDefaultModifiedAppearance().PlayerName;
+        var pet = Player.GetDefaultModifiedAppearance().PetId;
+        if(Transformed)
+        {
+            name = "Skibidi";
+            pet = "pet_EmptyPet";
+        }
         return new VisualAppearance(Player.GetDefaultModifiedAppearance(), TownOfUsAppearances.Swooper)
         {
-            PlayerName = "Skibidi",
-            PetId = "pet_EmptyPet",
+            PlayerName = name,
+            PetId = pet,
         };
     }
 
@@ -120,8 +128,8 @@ public sealed class SkibidiToiletRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITo
         Transformed = true;
         Player.MyPhysics.Animations.group.SpriteAnimator.GetComponent<SpriteRenderer>().material =
             new(Shader.Find("Sprites/Default"));
-        ogSize = Player.Collider.transform.localScale;
-        Player.Collider.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+        /*ogSize = Player.Collider.transform.localScale;
+        Player.Collider.transform.localScale = new Vector3(1.5f, 1.5f, 1f);*/
         
         Transform Names = Player.gameObject.transform.Find("Names");
         Transform ColorblindName = Names.transform.Find("ColorblindName_TMP");
@@ -142,7 +150,7 @@ public sealed class SkibidiToiletRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITo
         SpriteRenderer rend = Player.MyPhysics.Animations.group.SpriteAnimator.GetComponent<SpriteRenderer>();
         rend.material = new Material(Shader.Find("Unlit/PlayerShader"));
         PlayerMaterial.SetColors(Player.cosmetics.ColorId, rend);
-        Player.Collider.transform.localScale = ogSize;
+        /*Player.Collider.transform.localScale = ogSize;*/
         
     }
     public CustomRoleConfiguration Configuration => new(this)

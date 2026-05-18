@@ -167,7 +167,7 @@ public sealed class FortegreenRole(IntPtr cppPtr)
 
     public bool WinConditionMet()
     {
-        var glitchCount = CustomRoleUtils.GetActiveRolesOfType<SentinelRole>().Count(x => !x.Player.HasDied());
+        var glitchCount = CustomRoleUtils.GetActiveRolesOfType<FortegreenRole>().Count(x => !x.Player.HasDied());
 
         if (MiscUtils.KillersAliveCount > glitchCount)
         {
