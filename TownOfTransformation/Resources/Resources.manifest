@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3667086521
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: tot-bundle-win.bundle
+      Dependencies: {}

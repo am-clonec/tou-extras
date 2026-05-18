@@ -22,7 +22,7 @@ public sealed class FortegreenKillButton : TownOfUsKillRoleButton<FortegreenRole
     public override BaseKeybind Keybind => Keybinds.PrimaryAction;
     public override Color TextOutlineColor => TouExampleColors.Fortegreen;
     public override float Cooldown => Math.Clamp(OptionGroupSingleton<FortegreenOptions>.Instance.KillCooldown + MapCooldown, 5f, 120f);
-    public override LoadableAsset<Sprite> Sprite => ExampleNeutAssets.SentinelKillSprite;
+    public override LoadableAsset<Sprite> Sprite => NeutAssets.SentinelKillSprite;
     public override void CreateButton(Transform parent)
     {
         base.CreateButton(parent);

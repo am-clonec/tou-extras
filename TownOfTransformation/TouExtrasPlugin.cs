@@ -13,7 +13,7 @@ using TownOfUs;
 
 namespace TownOfTransformation;
 
-[BepInAutoPlugin("greenlemon.au.TownOfTransformation", "Tou Extras")]
+[BepInAutoPlugin("greenlemon.au.towntftransformation", "Town Of Transformation")]
 [BepInProcess("Among Us.exe")]
 [BepInDependency(ReactorPlugin.Id)]
 [BepInDependency(MiraApiPlugin.Id)]
@@ -27,12 +27,12 @@ public partial class TownOfTransformationPlugin : BasePlugin, IMiraPlugin
     public static CultureInfo Culture => TownOfUs.TownOfUsPlugin.Culture;
 
     /// <inheritdoc />
-    public string OptionsTitleText => "TOU Extras";
+    public string OptionsTitleText => "Town Of Transformation";
 
     /// <summary>
     ///     Determines if the current build is a dev build or not. This will change certain visuals as well as always grab news locally to be up to date.
     /// </summary>
-    public static bool IsDevBuild => true; // Set to true for testing, false for release
+    public static bool IsDevBuild => true;
 
     /// <inheritdoc />
     public ConfigFile GetConfigFile()
@@ -44,7 +44,7 @@ public partial class TownOfTransformationPlugin : BasePlugin, IMiraPlugin
 
     public override void Load()
     {
-        ReactorCredits.Register("Tou Extras", Version, IsDevBuild, ReactorCredits.AlwaysShow);
+        ReactorCredits.Register("Town Of Transformation", Version, IsDevBuild, ReactorCredits.AlwaysShow);
         IL2CPPChainloader.Instance.Finished += Modules.ExtensionLocale.SearchInternalLocale; // Initialise AFTER the mods are loaded to ensure maximum parity (no need for the soft dependency either then)
 
         Harmony.PatchAll();

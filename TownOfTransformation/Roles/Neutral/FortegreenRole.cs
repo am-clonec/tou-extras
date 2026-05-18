@@ -131,7 +131,7 @@ public sealed class FortegreenRole(IntPtr cppPtr)
             {
                 new(TouLocale.GetParsed($"ExampleRole{LocaleKey}Explode", "Explode"),
                     TouLocale.GetParsed($"ExampleRole{LocaleKey}ExplodeWikiDescription"),
-                    ExampleNeutAssets.SentinelExplodeSprite),
+                    NeutAssets.SentinelExplodeSprite),
             };
         }
     }
@@ -145,7 +145,7 @@ public sealed class FortegreenRole(IntPtr cppPtr)
     {
         CanUseVent = OptionGroupSingleton<FortegreenOptions>.Instance.CanVentAtLvl <= Level,
         IntroSound = TouAudio.GlitchSound,
-        Icon = ExampleRoleIcons.Sentinel,
+        Icon = RoleIcons.Sentinel,
         GhostRole = (RoleTypes)RoleId.Get<NeutralGhostRole>()
     };
 
@@ -192,7 +192,7 @@ public sealed class FortegreenRole(IntPtr cppPtr)
         if (Player.AmOwner)
         {
             OffsetButtons();
-            HudManager.Instance.ImpostorVentButton.graphic.sprite = ExampleNeutAssets.SentinelVentSprite.LoadAsset();
+            HudManager.Instance.ImpostorVentButton.graphic.sprite = NeutAssets.SentinelVentSprite.LoadAsset();
             HudManager.Instance.ImpostorVentButton.buttonLabelText.SetOutlineColor(TouExampleColors.Fortegreen);
         }
     }

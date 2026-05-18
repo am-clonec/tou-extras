@@ -1,0 +1,29 @@
+ManifestFileVersion: 0
+CRC: 84500362
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4f71902b046f549bc9be8d4e9bd223a5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 35199e0ea77117f0ff280a5900dc81b2
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 4f71902b046f549bc9be8d4e9bd223a5
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/SkibidiWalk.anim
+- Assets/SkibidiIdle.anim
+- Assets/little guy.png
+- Assets/spritesheetidle.png
+- Assets/lil guy.anim
+- Assets/spritesheet.png
+Dependencies: []

@@ -107,7 +107,7 @@ public sealed class SoulEaterRole(IntPtr cppPtr)
 
     public void OffsetButtons()
     {
-        var canVent = OptionGroupSingleton<InfiltratorOptions>.Instance.CanVent || LocalSettingsTabSingleton<TownOfUsLocalSettings>.Instance.OffsetButtonsToggle.Value;
+        var canVent = OptionGroupSingleton<SoulEaterOptions>.Instance.CanVent || LocalSettingsTabSingleton<TownOfUsLocalSettings>.Instance.OffsetButtonsToggle.Value;
         var reap = CustomButtonSingleton<SoulEaterReapButton>.Instance;
         Coroutines.Start(MiscUtils.CoMoveButtonIndex(reap, !canVent));
     }

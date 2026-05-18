@@ -61,35 +61,29 @@ using TownOfUs.Options.Roles.Impostor;
 using TownOfUs.Options;
 using TownOfUs.Patches;
 
-namespace TownOfTransformation.Modifiers;
+namespace TownOfTransformation.Buttons.Impostor;
 
-public sealed class LilGuyModifier() : BaseModifier
+public sealed class SkibidiToiletPoopButton : TownOfUsRoleButton<SkibidiToiletRole>
 {
-    public override string ModifierName => "lil guy";
-    public override bool HideOnUi => false;
+    public override string Name => "Poop";
+    public override Color TextOutlineColor => TownOfUsColors.Impostor;
 
-    public override bool ShowInFreeplay => true;
+    public override float Cooldown =>
+        Math.Clamp(OptionGroupSingleton<SkibidiToiletOptions>.Instance.PoopCooldown, 5f, 120f);
 
-    private AnimationClip ogRun;
-    
-    private AnimationClip ogIdle;
 
-    public override void OnActivate()
+    public override LoadableAsset<Sprite> Sprite => ImpAssets.SkibidiToiletPoopSprite;
+
+    public override bool CanUse()
     {
-        ogIdle = Player.MyPhysics.Animations.group.IdleAnim;
-        ogRun = Player.MyPhysics.Animations.group.RunAnim;
-
-        Player.MyPhysics.Animations.group.RunAnim = NormalAssets.LilGuyAnimation.LoadAsset();
-        Player.MyPhysics.Animations.group.IdleAnim = NormalAssets.LilGuyAnimation.LoadAsset();
-        Player.MyPhysics.Animations.PlayIdleAnimation();
-        Player.cosmetics.gameObject.SetActive(false);
-    }
-    public override void OnDeactivate()
-    {
-        Player.MyPhysics.Animations.group.RunAnim = ogRun;
-        Player.MyPhysics.Animations.group.IdleAnim = ogIdle;
-        Player.MyPhysics.Animations.PlayIdleAnimation();
-        Player.cosmetics.gameObject.SetActive(true);
+        return base.CanUse() && Role.Transformed && PlayerControl.LocalPlayer.GetClosestLivingPlayer(true, OptionGroupSingleton<SkibidiToiletOptions>.Instance.PoopRange) != null;
     }
 
+    protected override void OnClick()
+    {
+        var target = PlayerControl.LocalPlayer.GetClosestLivingPlayer(true, OptionGroupSingleton<SkibidiToiletOptions>.Instance.PoopRange);
+        target.RpcAddModifier<PoopedModifier>();
+    }
+
+        
 }

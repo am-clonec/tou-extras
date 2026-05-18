@@ -60,36 +60,70 @@ using TownOfUs.Networking;
 using TownOfUs.Options.Roles.Impostor;
 using TownOfUs.Options;
 using TownOfUs.Patches;
+using Epic.OnlineServices.RTC;
+using TownOfTransformation.Options.Modifiers.NeutImp;
 
 namespace TownOfTransformation.Modifiers;
 
-public sealed class LilGuyModifier() : BaseModifier
+public sealed class PoopedModifier() : TimedModifier, IVisualAppearance
 {
-    public override string ModifierName => "lil guy";
+    public override string ModifierName => "pooped";
     public override bool HideOnUi => false;
+    public bool VisualPriority => true;
+    public override float Duration => OptionGroupSingleton<SkibidiToiletOptions>.Instance.PoopDuration;
 
-    public override bool ShowInFreeplay => true;
+    public VisualAppearance GetVisualAppearance()
+    {
+        var nameColor = new Color(0.5019607843f, 0.3450980392f, 0.1764705882f, 1f);
+        var hatId = "hat_Chocolate";
+        var skinId = "skin_None";
+        var visorId = "visor_None";
+        var colorId = 9;
+        var name = "stinky";
 
-    private AnimationClip ogRun;
-    
-    private AnimationClip ogIdle;
+        
+        
+            
+        
+
+
+        return new VisualAppearance(Player.GetDefaultModifiedAppearance(), TownOfUsAppearances.Swooper)
+        {
+            HatId = hatId,
+            SkinId = skinId,
+            VisorId = visorId,
+            PlayerName = name,
+            PetId = "pet_EmptyPet",
+            ColorId = colorId,
+            NameColor = nameColor,
+            ColorBlindTextColor = Color.clear,
+
+            /*PlayerMaterialColor = new Color(1f, 0.8392156863f, 0.9254901961f, 1f),
+            PlayerMaterialBackColor = new Color(0.8705882353f, 0.5725490196f, 0.7019607843f, 1f), */
+            
+            
+            
+        };
+    }
 
     public override void OnActivate()
     {
-        ogIdle = Player.MyPhysics.Animations.group.IdleAnim;
-        ogRun = Player.MyPhysics.Animations.group.RunAnim;
-
-        Player.MyPhysics.Animations.group.RunAnim = NormalAssets.LilGuyAnimation.LoadAsset();
-        Player.MyPhysics.Animations.group.IdleAnim = NormalAssets.LilGuyAnimation.LoadAsset();
-        Player.MyPhysics.Animations.PlayIdleAnimation();
-        Player.cosmetics.gameObject.SetActive(false);
+        Player.RawSetAppearance(this);
     }
+
     public override void OnDeactivate()
     {
-        Player.MyPhysics.Animations.group.RunAnim = ogRun;
-        Player.MyPhysics.Animations.group.IdleAnim = ogIdle;
-        Player.MyPhysics.Animations.PlayIdleAnimation();
-        Player.cosmetics.gameObject.SetActive(true);
+        Player.ResetAppearance();
     }
 
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        if (VanillaSystemCheckPatches.ShroomSabotageSystem && VanillaSystemCheckPatches.ShroomSabotageSystem.IsActive)
+        {
+            Player.RawSetAppearance(this);
+
+        }
+    }
 }

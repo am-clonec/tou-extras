@@ -53,20 +53,25 @@ using TownOfTransformation.Modifiers;
 using Reactor.Networking;
 using HarmonyLib;
 using Rewired;
+using TMPro;
+using TownOfUs.Utilities.Appearances;
 
 namespace TownOfTransformation.Roles.Impostor;
-
-public sealed class BakerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRole, IWikiDiscoverable
+public sealed class SkibidiToiletRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRole, IWikiDiscoverable, IVisualAppearance
 {
-
-
-    [HideFromIl2Cpp] public Muffin? Muffie { get; set; }
-    [HideFromIl2Cpp] public BakerBakeButton? BakeButton { get; set; }
-
-    public string LocaleKey => "Baker";
+    public string LocaleKey => "SkibidiToilet";
     public string RoleName => TouLocale.Get($"TouRole{LocaleKey}");
     public string RoleDescription => TouLocale.GetParsed($"TouRole{LocaleKey}IntroBlurb");
     public string RoleLongDescription => TouLocale.GetParsed($"TouRole{LocaleKey}TabDescription");
+    public bool Transformed { get; set; }
+    private AnimationClip ogRun;
+    
+    private AnimationClip ogIdle;
+    private Vector3 ogSize;
+    private bool layer;
+    private string ogColorblindName;
+    private string ogName;
+    
 
     public string GetAdvancedDescription()
     {
@@ -87,73 +92,65 @@ public sealed class BakerRole(IntPtr cppPtr) : ImpostorRole(cppPtr), ITownOfUsRo
                     TouNeutAssets.ChefCookSprite)
             };
         }
-    }
+    } 
 
     public Color RoleColor => TownOfUsColors.Impostor;
     public ModdedRoleTeams Team => ModdedRoleTeams.Impostor;
     public RoleAlignment RoleAlignment => RoleAlignment.ImpostorPower;
     
 
+        public VisualAppearance GetVisualAppearance()
+    {
+        return new VisualAppearance(Player.GetDefaultModifiedAppearance(), TownOfUsAppearances.Swooper)
+        {
+            PlayerName = "Skibidi",
+            PetId = "pet_EmptyPet",
+        };
+    }
+
+    public void Transform()
+    {
+        ogIdle = Player.MyPhysics.Animations.group.IdleAnim;
+        ogRun = Player.MyPhysics.Animations.group.RunAnim;
+        layer = Player.cosmetics.gameObject.active;
+        Player.MyPhysics.Animations.group.RunAnim = NormalAssets.SkibidiWalkAnimation.LoadAsset();
+        Player.MyPhysics.Animations.group.IdleAnim = NormalAssets.SkibidiIdleAnimation.LoadAsset();
+        Player.MyPhysics.Animations.PlayIdleAnimation();
+        Player.cosmetics.gameObject.SetActive(false);
+        Transformed = true;
+        Player.MyPhysics.Animations.group.SpriteAnimator.GetComponent<SpriteRenderer>().material =
+            new(Shader.Find("Sprites/Default"));
+        ogSize = Player.Collider.transform.localScale;
+        Player.Collider.transform.localScale = new Vector3(1.5f, 1.5f, 1f);
+        
+        Transform Names = Player.gameObject.transform.Find("Names");
+        Transform ColorblindName = Names.transform.Find("ColorblindName_TMP");
+        
+        ogColorblindName = ColorblindName.GetComponent<TextMeshPro>().text;
+       
+        ColorblindName.GetComponent<TextMeshPro>().text = "Skibidi";
+        
+    
+    }
+    public void Untransform()
+    {
+        Player.MyPhysics.Animations.group.RunAnim = ogRun;
+        Player.MyPhysics.Animations.group.IdleAnim = ogIdle;
+        Player.MyPhysics.Animations.PlayIdleAnimation();
+        Player.cosmetics.gameObject.SetActive(layer);
+        Transformed = false;
+        SpriteRenderer rend = Player.MyPhysics.Animations.group.SpriteAnimator.GetComponent<SpriteRenderer>();
+        rend.material = new Material(Shader.Find("Unlit/PlayerShader"));
+        PlayerMaterial.SetColors(Player.cosmetics.ColorId, rend);
+        Player.Collider.transform.localScale = ogSize;
+        
+    }
     public CustomRoleConfiguration Configuration => new(this)
     {
         
-        Icon = TouRoleIcons.Chef,
+        Icon = RoleIcons.SkibidiToilet,
         OptionsScreenshot = TouBanners.ImpostorRoleBanner,
         MaxRoleCount = 1,
         IntroSound = TouAudio.TimeLordIntroSound
     };
-
-
-
-    public override void Initialize(PlayerControl player)
-    {
-        RoleBehaviourStubs.Initialize(this, player);
-        BakeButton = new BakerBakeButton();
-        var options = OptionGroupSingleton<BakerOptions>.Instance;
-
-    }
-
-
-
-    public override void Deinitialize(PlayerControl targetPlayer)
-    {
-        RoleBehaviourStubs.Deinitialize(this, targetPlayer);
-
-        
-    }
-
-    public void ForceEffectEnd()
-    {
-        BakeButton?.ForceEffectEnd();
-    }
-
-[MethodRpc((uint)TownOfUsRpc.PlantBomb)]
-    public static void RpcPlaceMuffin(PlayerControl player, Vector2 position, PlayerControl target)
-    {
-        if (LobbyBehaviour.Instance)
-        {
-            MiscUtils.RunAnticheatWarning(player);
-            return;
-        }
-        if (player.Data.Role is not BakerRole role)
-        {
-            Error("RpcPlaceMuffin - Invalid baker");
-            return;
-        }
-
-
-        if (player.AmOwner)
-        {
-            role.Muffie = Muffin.CreateMuffin(player, position);
-        }
-        
-        /*Coroutines.Start(Muffin.MuffinShowTarget(target, position));*/
-        role.Muffie?.Detonate(target);
-        
-        
-    }
-
-
-
-    
 }

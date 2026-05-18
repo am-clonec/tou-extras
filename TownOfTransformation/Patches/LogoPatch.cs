@@ -15,7 +15,7 @@ public static class LogoPatch
     public static bool Prefix(ref LoadableAsset<Sprite> __result)
 #pragma warning restore CA1707
     {
-        __result = ExampleAssets.Banner;
+        __result = NormalAssets.Banner;
         return false;
     }
 }
